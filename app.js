@@ -3,6 +3,7 @@ const exphbs = require('express-handlebars');
 
 const app = express();
 
+app.use(express.static('public'));
 app.use(express.urlencoded({ extended: false }));
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
