@@ -1,42 +1,46 @@
-<h1>Formulario HTML</h1>
-<h2>{{title}}</h2>
-<form action="/enviar" method="post" enctype="multipart/form-data">
-  ​
-  <label for="nombre">Ingrese su nombre:</label>
-  <input class="form-control" type="text" name="nombre" placeholder="Ej: Obi Juan">
+<h1 class="text-center mt-3 mb-5">Formulario HTML</h1>
 
-  <br>
+<section class="row mb-5">
 
-  <label for="apellido">Ingrese su apellido:</label>
-  <input class="form-control" type="text" name="apellido" placeholder="Ej: Kenobi">
+  <form class="col-sm-5 m-auto" action="/enviar" method="post" enctype="multipart/form-data">
+    ​
+    <label for="nombre">Ingrese su nombre:</label>
+    <input class="form-control" type="text" name="nombre" placeholder="Ej: Obi Juan">
 
-  <br>
-  ​
-  <label for="correo">Ingrese su E-Mail:</label>
-  <input class="form-control" type="email" name="correo" placeholder="Ej: obi.juan@jedi.com">
-  ​
-  <br>
-  ​
-  <label for="asunto">Elija su asunto:</label>
-  <select class="form-control" name="asunto">
-    <option value="1">Consulta</option>
-    <option value="2">Pedido</option>
-    <option value="3">Sugerencia</option>
-    <option value="4">Reclamo</option>
-  </select>
-  ​
-  <br>
-  ​
-  <label for="archivo">Ingrese su archivo:</label>
-  <input class="form-control" type="file" name="archivo">
+    <br>
 
-  <br>
+    <label for="apellido">Ingrese su apellido:</label>
+    <input class="form-control" type="text" name="apellido" placeholder="Ej: Kenobi">
 
-  <label for="mensaje">Ingrese su mensaje:</label>
-  <textarea class="form-control" name="mensaje" cols="30" rows="10" placeholder="Max: 100 caracteres"></textarea>
-  ​
-  <br>
-  ​
-  <input class="btn btn-primary" type="submit" value="Enviar!">
-  ​
-</form>
+    <br>
+    ​
+    <label for="correo">Ingrese su E-Mail:</label>
+    <input class="form-control" type="email" name="correo" placeholder="Ej: obi.juan@jedi.com">
+    ​
+    <br>
+    ​
+    <label for="asunto">Elija su asunto:</label>
+    <select class="form-control" name="asunto">
+      <option value="1">Consulta</option>
+      <option value="2">Pedido</option>
+      <option value="3">Sugerencia</option>
+      <option value="4">Reclamo</option>
+    </select>
+    ​
+    <br>
+    ​
+    <label for="archivo">Ingrese su archivo:</label>
+    <input class="form-control" type="file" name="archivo">
+
+    <br>
+
+    <label for="mensaje">Ingrese su mensaje:</label>
+    <textarea class="form-control" name="mensaje" cols="30" rows="10" placeholder="Max: 100 caracteres"></textarea>
+    ​
+    <br>
+    ​
+    <input class="btn btn-primary" type="submit" value="Enviar!">
+    ​
+  </form>
+
+</section>

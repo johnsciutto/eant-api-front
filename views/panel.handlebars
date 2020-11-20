@@ -1,7 +1,7 @@
 <h1 class="text-center p-5">{{heading}}</h1>
 <section class="row">
   <div class="col-sm-10 offset-sm-1">
-    <a href="#" class="btn btn-success float-right my-3">Nueva Pelicula</a>
+    <a href="/agregar" class="btn btn-success float-right my-3">Nueva Pelicula</a>
     <!-- LISTADO DE Peliculas -->
     <table class="table">
       <thead>
@@ -9,6 +9,7 @@
           <th width="5%">ID</th>
           <th width="20%">TITULO</th>
           <th width="20%">ESTRENO</th>
+          <th width="10%">RATING</th>
           <th width="20%">GENERO</th>
           <th width="35%">ACCIONES</th>
         </tr>
@@ -20,10 +21,11 @@
           <td>{{this._id}}</td>
           <td>{{this.title}}</td>
           <td>{{this.year}}</td>
+          <td>{{this.rating}}</td>
           <td>{{this.genere}}</td>
           <td>
-            <a href="#" class="btn btn-primary">ACTUALIZAR</a>
-            <button id="#" class="btn btn-danger">ELIMINAR</button>
+            <a href="/{{this._id}}" class="btn btn-primary">ACTUALIZAR</a>
+            <button id="{{this._id}}" class="btn btn-danger">ELIMINAR</button>
           </td>
         </tr>
         <!-- FIN DE PELICULA -->
