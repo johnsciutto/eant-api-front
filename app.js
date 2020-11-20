@@ -41,20 +41,20 @@ app.route('/agregar')
     res.redirect('/');
   });
 
-app.get('/:idModificar', async (req, res) => {
-  const { idModificar } = req.params;
-  const { data } = await axios.get(`${BACK_URL}/peliculas/${idModificar}`);
-  res.render('modificar', data);
-});
-
-app.post('/:idModificar', async (req, res) => {
-  const { data } = await axios({
-    method: 'put',
-    url: `${BACK_URL}/peliculas/${req.params.idModificar}`,
-    data: req.body,
+app.route('/:idModificar')
+  .get(async (req, res) => {
+    const { idModificar } = req.params;
+    const { data } = await axios.get(`${BACK_URL}/peliculas/${idModificar}`);
+    res.render('modificar', data);
+  })
+  .post(async (req, res) => {
+    await axios({
+      method: 'put',
+      url: `${BACK_URL}/peliculas/${req.params.idModificar}`,
+      data: req.body,
+    });
+    res.redirect('/');
   });
-  res.redirect('/');
-});
 
 app.get('/:name?', (req, res) => {
   const name = req.params.name || 'home';
