@@ -1,13 +1,13 @@
-<h1 class="text-center my-4">Modificar Pelicula</h1>
+<h1 class="text-center my-4">Change Movie</h1>
 <section class="row">
 
   <form class="col-sm-5 mx-auto" action="/{{_id}}" method="POST">
     <div class="form-group">
-      <label for="title">Titulo</label>
+      <label for="title">Title</label>
       <input type="text" name="title" id="title" class="form-control" value="{{title}}">
     </div>
     <div class="form-group">
-      <label for="year">Estreno</label>
+      <label for="year">Year</label>
       <input type="number" name="year" id="year" class="form-control" value="{{year}}">
     </div>
     <div class="form-group">
@@ -15,19 +15,20 @@
       <input type="number" name="rating" id="rating" class="form-control" value="{{rating}}">
     </div>
     <div class="form-group">
-      <label for="genere">Genero</label>
-      <select class="form-control" name="genere" id="genere">
-        <option value="Superheroes">Superheroes</option>
-        <option value="Science Fiction">Ciencia Ficcion</option>
-        <option value="Fantasy">Fantasia</option>
-        <option value="Documentary">Documental</option>
-        <option value="Horror">Horror</option>
-        <option value="Action">Accion</option>
-        <option value="Drama">Drama</option>
-        <option value="Comedy">Comedia</option>
-      </select>
+      <label for="genre">Genre</label></br>
+      <input name="genre" list="genre" value="{{genre}}">
     </div>
-    <button class="btn btn-primary" type="submit">Modificar Pelicula</button>
+    <datalist id="genre">
+      <option value="Superheroes">
+      <option value="Science Fiction">
+      <option value="Fantasy">
+      <option value="Documentary">
+      <option value="Horror">
+      <option value="Action">
+      <option value="Drama">
+      <option value="Comedy">
+    </datalist>
+    <button class="btn btn-primary" type="submit">Change Movie</button>
   </form>
 
 </section>
