@@ -2,9 +2,7 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const axios = require('axios').default;
 
-const {
-  BACK_URL,
-} = process.env;
+const { BACK_URL } = process.env;
 
 const app = express();
 
@@ -28,23 +26,20 @@ app.get('/', async (req, res) => {
   res.render('panel', { heading, movies });
 });
 
+app.get('/contacto', (req, res) => { res.render('contacto'); });
 
-app.get('/agregar', async (req, res) => {
-  res.render('agregar');
-});
-
-app.post('/agregar', async (req, res) => {
-  const { data } = await axios({
-    method: 'post',
-    url: `${BACK_URL}/peliculas`,
-    data: req.body,
+app.route('/agregar')
+  .get((req, res) => {
+    res.render('agregar');
+  })
+  .post(async (req, res) => {
+    await axios({
+      method: 'post',
+      url: `${BACK_URL}/peliculas`,
+      data: req.body,
+    });
+    res.redirect('/');
   });
-  res.redirect('/');
-});
-
-app.get('/contacto', (req, res) => {
-  res.render('contacto');
-});
 
 app.get('/:idModificar', async (req, res) => {
   const { idModificar } = req.params;
