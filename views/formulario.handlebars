@@ -1,4 +1,4 @@
-<h1 class="text-center my-4">Change Movie</h1>
+<h1 class="text-center my-4">{{action}} Movie</h1>
 <section class="row">
 
   <form class="col-sm-5 mx-auto" action="/{{_id}}" method="POST">
@@ -16,7 +16,7 @@
     </div>
     <div class="form-group">
       <label for="genre">Genre</label></br>
-      <input name="genre" list="genre" value="{{genre}}">
+      <input name="genre" class="form-control" list="genre" value="{{genre}}">
     </div>
     <datalist id="genre">
       <option value="Superheroes">
@@ -28,7 +28,7 @@
       <option value="Drama">
       <option value="Comedy">
     </datalist>
-    <button class="btn btn-primary" type="submit">Change Movie</button>
+    <button class="btn btn-primary" type="submit">{{action}} Movie</button>
   </form>
 
 </section>

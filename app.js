@@ -18,19 +18,13 @@ app.get('/favicon.ico', (req, res) => {
   res.end('No favicon to show');
 });
 
-app.get('/', async (req, res) => {
-  const heading = 'Movie Catalog';
+app.route('/')
+  .get(async (req, res) => {
+    const heading = 'Movie Catalog';
 
-  const { data: movies } = await axios.get(`${BACK_URL}/peliculas`);
+    const { data: movies } = await axios.get(`${BACK_URL}/peliculas`);
 
-  res.render('panel', { heading, movies });
-});
-
-app.get('/contacto', (req, res) => { res.render('contacto'); });
-
-app.route('/agregar')
-  .get((req, res) => {
-    res.render('agregar');
+    res.render('panel', { heading, movies });
   })
   .post(async (req, res) => {
     await axios({
@@ -41,11 +35,21 @@ app.route('/agregar')
     res.redirect('/');
   });
 
+app.get('/contacto', (req, res) => { res.render('contacto'); });
+
+app.route('/agregar')
+  .get((req, res) => {
+    res.render('formulario', { action: 'Add' });
+  });
+
 app.route('/:idModificar')
   .get(async (req, res) => {
     const { idModificar } = req.params;
     const { data } = await axios.get(`${BACK_URL}/peliculas/${idModificar}`);
-    res.render('modificar', data);
+    res.render('formulario', {
+      action: 'Change',
+      ...data,
+    });
   })
   .post(async (req, res) => {
     await axios({
