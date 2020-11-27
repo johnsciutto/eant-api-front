@@ -1,22 +1,22 @@
 <h1 class="text-center my-4">{{action}} Movie</h1>
 <section class="row">
 
-  <form class="col-sm-5 mx-auto" action="/{{_id}}" method="POST">
+  <form class="col-sm-5 mx-auto" action="/{{action}}/{{_id}}" method={{method}}>
     <div class="form-group">
       <label for="title">Title</label>
-      <input type="text" name="title" id="title" class="form-control" value="{{title}}">
+      <input type="text" name="title" id="title" class="form-control" value="{{title}}" {{fields}}>
     </div>
     <div class="form-group">
       <label for="year">Year</label>
-      <input type="number" name="year" id="year" class="form-control" value="{{year}}">
+      <input type="number" name="year" id="year" class="form-control" value="{{year}}" {{fields}}>
     </div>
     <div class="form-group">
       <label for="rating">Rating</label>
-      <input type="number" name="rating" id="rating" class="form-control" value="{{rating}}">
+      <input type="number" name="rating" id="rating" class="form-control" value="{{rating}}" {{fields}}>
     </div>
     <div class="form-group">
       <label for="genre">Genre</label></br>
-      <input name="genre" class="form-control" list="genre" value="{{genre}}">
+      <input name="genre" class="form-control" list="genre" value="{{genre}}" {{fields}}>
     </div>
     <datalist id="genre">
       <option value="Superheroes">

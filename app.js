@@ -35,18 +35,19 @@ app.route('/')
     res.redirect('/');
   });
 
-app.get('/contacto', (req, res) => { res.render('contacto'); });
+app.get('/contact', (req, res) => { res.render('contacto'); });
 
-app.route('/agregar')
+app.route('/add')
   .get((req, res) => {
     res.render('formulario', { action: 'Add' });
   });
 
-app.route('/:idModificar')
+app.route('/change/:id')
   .get(async (req, res) => {
-    const { idModificar } = req.params;
-    const { data } = await axios.get(`${BACK_URL}/peliculas/${idModificar}`);
+    const { id } = req.params;
+    const { data } = await axios.get(`${BACK_URL}/peliculas/${id}`);
     res.render('formulario', {
+      method: 'POST',
       action: 'Change',
       ...data,
     });
@@ -60,6 +61,30 @@ app.route('/:idModificar')
     res.redirect('/');
   });
 
+app.route('/delete/:id')
+  .get(async (req, res) => {
+    const { id } = req.params;
+    const { data } = await axios.get(`${BACK_URL}/peliculas/${id}`);
+    res.render('formulario', {
+      action: 'Delete',
+      method: 'DELETE',
+      fields: 'disabled',
+      ...data,
+    });
+  })
+  // TODO: Hacer funcionar este endpoint
+  .delete(async (req, res) => {
+    // check if the user is authenticated
+    await axios({
+      method: 'delete',
+      url: `${BACK_URL}/peliculas/${req.params.id}`,
+      data: {
+        flag: 'DELETE-ONE',
+      },
+    });
+    res.redirect('/');
+  });
+
 app.get('/:name?', (req, res) => {
   const name = req.params.name || 'home';
 
@@ -68,4 +93,4 @@ app.get('/:name?', (req, res) => {
   res.render('home', { title });
 });
 
-app.listen(PORT, () => console.log(`Listening on port ${PORT}...`));
+app.listen(PORT, () => console.log(`Front-End working on port ${PORT}...`));

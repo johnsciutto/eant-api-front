@@ -1,17 +1,17 @@
 <h1 class="text-center p-5">{{heading}}</h1>
 <section class="row">
   <div class="col-sm-10 offset-sm-1">
-    <a href="/agregar" class="btn btn-success float-right my-3">Nueva Pelicula</a>
+    <a href="/add" class="btn btn-success float-right my-3">Nueva Pelicula</a>
     <!-- LISTADO DE Peliculas -->
     <table class="table">
       <thead>
         <tr class="text-center">
           <th width="5%">ID</th>
-          <th width="20%">TITULO</th>
-          <th width="20%">ESTRENO</th>
+          <th width="20%">TITLE</th>
+          <th width="20%">YEAR</th>
           <th width="10%">RATING</th>
-          <th width="20%">GENERO</th>
-          <th width="35%">ACCIONES</th>
+          <th width="20%">GENRE</th>
+          <th width="35%">ACTIONS</th>
         </tr>
       </thead>
       <tbody>
@@ -24,8 +24,8 @@
           <td>{{this.rating}}</td>
           <td>{{this.genre}}</td>
           <td>
-            <a href="/{{this._id}}" class="btn btn-primary">ACTUALIZAR</a>
-            <button id="{{this._id}}" class="btn btn-danger">ELIMINAR</button>
+            <a href="/change/{{this._id}}" class="btn btn-primary">UPDATE</a>
+            <a href="/delete/{{this._id}}" class="btn btn-danger">DELETE</a>
           </td>
         </tr>
         <!-- FIN DE PELICULA -->
