@@ -8,6 +8,7 @@ const app = express();
 
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 
@@ -25,7 +26,23 @@ app.route('/')
     const { data: movies } = await axios.get(`${BACK_URL}/peliculas`);
 
     res.render('panel', { heading, movies });
-  })
+  });
+// .post(async (req, res) => {
+//   await axios({
+//     method: 'post',
+//     url: `${BACK_URL}/peliculas`,
+//     data: req.body,
+//   });
+//   res.redirect('/');
+// });
+
+app.get('/contact', (req, res) => { res.render('contacto'); });
+
+app.route('/add')
+  .get((req, res) => {
+    res.render('formulario', { action: 'Add', method: 'POST' });
+  });
+app.route('/add')
   .post(async (req, res) => {
     await axios({
       method: 'post',
@@ -33,13 +50,6 @@ app.route('/')
       data: req.body,
     });
     res.redirect('/');
-  });
-
-app.get('/contact', (req, res) => { res.render('contacto'); });
-
-app.route('/add')
-  .get((req, res) => {
-    res.render('formulario', { action: 'Add' });
   });
 
 app.route('/change/:id')
@@ -55,7 +65,7 @@ app.route('/change/:id')
   .post(async (req, res) => {
     await axios({
       method: 'put',
-      url: `${BACK_URL}/peliculas/${req.params.idModificar}`,
+      url: `${BACK_URL}/peliculas/${req.params.id}`,
       data: req.body,
     });
     res.redirect('/');
@@ -65,16 +75,18 @@ app.route('/delete/:id')
   .get(async (req, res) => {
     const { id } = req.params;
     const { data } = await axios.get(`${BACK_URL}/peliculas/${id}`);
+
     res.render('formulario', {
       action: 'Delete',
-      method: 'DELETE',
+      method: 'POST',
       fields: 'disabled',
       ...data,
     });
   })
   // TODO: Hacer funcionar este endpoint
-  .delete(async (req, res) => {
+  .post(async (req, res) => {
     // check if the user is authenticated
+
     await axios({
       method: 'delete',
       url: `${BACK_URL}/peliculas/${req.params.id}`,
