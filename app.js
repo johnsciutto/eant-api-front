@@ -36,6 +36,19 @@ app.route('/')
 //   res.redirect('/');
 // });
 
+app.get('/login', (req, res) => {
+  res.render('login');
+});
+
+app.get('/authenticate', (req, res) => {
+  const { body } = req;
+
+  // !!! TODO: Make sure I'm able to access the information that I'm being sent
+  // !!! in the form (username and password)
+
+  res.send(`The info sent is ${body.username}`);
+});
+
 app.get('/contact', (req, res) => { res.render('contacto'); });
 
 app.route('/add')
