@@ -23,8 +23,14 @@ app.route('/')
   .get(async (req, res) => {
     const { cookie } = req.headers;
 
+    // TODO: DELETE FROM HERE ||||||||||||||||||||||||||||||
+    console.log('--------------------------------');
+    console.log({ cookie });
+    console.log('--------------------------------');
+    // TODO: DELETE TO HERE ||||||||||||||||||||||||||||||||
+
     let auth = '';
-    if (cookie.slice(0, 5) === '_auth') {
+    if (cookie && cookie.slice(0, 5) === '_auth') {
       auth = cookie.slice(6);
     }
 
