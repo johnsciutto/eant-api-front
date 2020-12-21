@@ -1,8 +1,7 @@
 <h1 class="text-center p-5">{{heading}}</h1>
 <section class="row">
   <div class="col-sm-10 offset-sm-1">
-    <a href="/add" class="btn btn-success float-right my-3">Nueva Pelicula</a>
-    <!-- LISTADO DE Peliculas -->
+    <a href="/add" class="btn btn-success float-right my-3">Add Movie</a>
     <table class="table">
       <thead>
         <tr class="text-center">
@@ -16,7 +15,6 @@
       </thead>
       <tbody>
         {{#each movies}}
-        <!-- INICIO PELICULA -->
         <tr class="text-center">
           <td>{{this._id}}</td>
           <td>{{this.title}}</td>
@@ -28,10 +26,8 @@
             <a href="/delete/{{this._id}}" class="btn btn-danger">DELETE</a>
           </td>
         </tr>
-        <!-- FIN DE PELICULA -->
         {{/each}}
       </tbody>
     </table>
-    <!-- FIN DE LAS PELICULAS -->
   </div>
 </section>
