@@ -21,32 +21,47 @@ app.get('/favicon.ico', (req, res) => {
 
 app.route('/')
   .get(async (req, res) => {
-    const heading = 'Movie Catalog';
+    const { cookie } = req.headers;
 
-    const { data: movies } = await axios.get(`${BACK_URL}/peliculas`);
+    let auth = '';
+    if (cookie.slice(0, 5) === '_auth') {
+      auth = cookie.slice(6);
+    }
 
-    res.render('panel', { heading, movies });
+    try {
+      if (cookie && auth) {
+        const heading = 'Movie Catalog';
+        const { data: movies } = await axios({
+          method: 'get',
+          url: `${BACK_URL}/movies`,
+          headers: {
+            Cookie: cookie,
+          },
+        });
+        return res.render('panel', { heading, movies });
+      }
+      res.render('login');
+    } catch (error) {
+      throw new Error(error);
+    }
   });
-// .post(async (req, res) => {
-//   await axios({
-//     method: 'post',
-//     url: `${BACK_URL}/peliculas`,
-//     data: req.body,
-//   });
-//   res.redirect('/');
-// });
 
 app.get('/login', (req, res) => {
   res.render('login');
 });
 
-app.get('/authenticate', (req, res) => {
-  const { body } = req;
-
-  // !!! TODO: Make sure I'm able to access the information that I'm being sent
-  // !!! in the form (username and password)
-
-  res.send(`The info sent is ${body.username}`);
+app.post('/authenticate', async (req, res) => {
+  // Do  a call to the backend, either get a cookie or not.
+  const { data } = await axios({
+    method: 'post',
+    url: `${BACK_URL}/auth/login`,
+    data: req.body,
+  });
+  if (data) {
+    res.setHeader('Set-Cookie', [`_auth=${data}; expires=${new Date(2022, 0, 1).toUTCString()}`]);
+    return res.redirect('/');
+  }
+  return res.render('login');
 });
 
 app.get('/contact', (req, res) => { res.render('contacto'); });
@@ -54,13 +69,15 @@ app.get('/contact', (req, res) => { res.render('contacto'); });
 app.route('/add')
   .get((req, res) => {
     res.render('formulario', { action: 'Add', method: 'POST' });
-  });
-app.route('/add')
+  })
   .post(async (req, res) => {
     await axios({
       method: 'post',
-      url: `${BACK_URL}/peliculas`,
+      url: `${BACK_URL}/movies`,
       data: req.body,
+      headers: {
+        cookie: req.headers.cookie,
+      },
     });
     res.redirect('/');
   });
@@ -68,7 +85,11 @@ app.route('/add')
 app.route('/change/:id')
   .get(async (req, res) => {
     const { id } = req.params;
-    const { data } = await axios.get(`${BACK_URL}/peliculas/${id}`);
+    const { data } = await axios.get(`${BACK_URL}/movies/${id}`, {
+      headers: {
+        cookie: req.headers.cookie,
+      },
+    });
     res.render('formulario', {
       method: 'POST',
       action: 'Change',
@@ -78,8 +99,11 @@ app.route('/change/:id')
   .post(async (req, res) => {
     await axios({
       method: 'put',
-      url: `${BACK_URL}/peliculas/${req.params.id}`,
+      url: `${BACK_URL}/movies/${req.params.id}`,
       data: req.body,
+      headers: {
+        cookie: req.headers.cookie,
+      },
     });
     res.redirect('/');
   });
@@ -87,7 +111,11 @@ app.route('/change/:id')
 app.route('/delete/:id')
   .get(async (req, res) => {
     const { id } = req.params;
-    const { data } = await axios.get(`${BACK_URL}/peliculas/${id}`);
+    const { data } = await axios.get(`${BACK_URL}/movies/${id}`, {
+      headers: {
+        cookie: req.headers.cookie,
+      },
+    });
 
     res.render('formulario', {
       action: 'Delete',
@@ -96,15 +124,17 @@ app.route('/delete/:id')
       ...data,
     });
   })
-  // TODO: Hacer funcionar este endpoint
   .post(async (req, res) => {
-    // check if the user is authenticated
+    // TODO: check if the user is authenticated
 
     await axios({
       method: 'delete',
-      url: `${BACK_URL}/peliculas/${req.params.id}`,
+      url: `${BACK_URL}/movies/${req.params.id}`,
       data: {
         flag: 'DELETE-ONE',
+      },
+      headers: {
+        cookie: req.headers.cookie,
       },
     });
     res.redirect('/');
