@@ -50,6 +50,31 @@ app.get('/login', (req, res) => {
   res.render('login');
 });
 
+app.get('/signin', (req, res) => {
+  res.render('signin');
+});
+
+app.post('/signin', async (req, res) => {
+  try {
+    const { data } = await axios({
+      method: 'post',
+      url: `${BACK_URL}/auth/signup`,
+      data: req.body,
+    });
+
+    if (data.ok) {
+      // Authenticate them
+      res.cookie('_auth', data.validToken, {
+        expires: new Date(2022, 0, 1),
+      });
+      return res.redirect('/');
+    }
+    res.redirect('/signin');
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
 app.post('/authenticate', async (req, res) => {
   // Do  a call to the backend, either get a cookie or not.
   const { data } = await axios({
