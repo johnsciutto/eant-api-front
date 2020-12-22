@@ -63,7 +63,6 @@ app.post('/signin', async (req, res) => {
     });
 
     if (data.ok) {
-      // Authenticate them
       res.cookie('_auth', data.validToken, {
         expires: new Date(2022, 0, 1),
       });

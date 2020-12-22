@@ -1,6 +1,5 @@
 <h1 class="text-center my-4">{{action}} Movie</h1>
 <section class="row">
-
   <form class="col-sm-5 mx-auto" action="/{{action}}/{{_id}}" method={{method}}>
     <div class="form-group">
       <label for="title">Title</label>
@@ -28,7 +27,7 @@
       <option value="Drama">
       <option value="Comedy">
     </datalist>
-    <button class="btn btn-primary" type="submit">{{action}} Movie</button>
+    <button class="btn btn-primary mr-2" type="submit">{{action}} Movie</button>
+    <a href="/" class="btn btn-outline-danger">Cancel</a>
   </form>
-
 </section>
