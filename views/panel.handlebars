@@ -4,25 +4,27 @@
 </nav>
 <section class="row">
   <div class="col-sm-10 offset-sm-1">
-    <table class="table">
-      <thead>
-        <tr class="text-center">
-          <th width="20%">TITLE</th>
-          <th width="20%">YEAR</th>
-          <th width="10%">RATING</th>
-          <th width="20%">GENRE</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each movies}}
-        <tr class="text-center">
-          <td>{{this.title}}</td>
-          <td>{{this.year}}</td>
-          <td>{{this.rating}}</td>
-          <td>{{this.genre}}</td>
-        </tr>
-        {{/each}}
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr class="text-center">
+            <th class="text-left" scope="col" width="20%">TITLE</th>
+            <th scope="col" width="20%">YEAR</th>
+            <th scope="col" width="10%">RATING</th>
+            <th scope="col" width="20%">GENRE</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each movies}}
+          <tr class="text-center">
+            <td class="text-left font-weight-bold align-middle">{{this.title}}</td>
+            <td class="align-middle">{{this.year}}</td>
+            <td class="align-middle">{{this.rating}}</td>
+            <td class="align-middle">{{this.genre}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
   </div>
 </section>
