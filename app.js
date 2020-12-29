@@ -56,11 +56,11 @@ app.get('/login', (req, res) => {
   res.render('login');
 });
 
-app.get('/signin', (req, res) => {
+app.get('/signup', (req, res) => {
   res.render('signin');
 });
 
-app.post('/signin', async (req, res) => {
+app.post('/signup', async (req, res) => {
   try {
     const { data } = await axios({
       method: 'post',
@@ -74,7 +74,7 @@ app.post('/signin', async (req, res) => {
       });
       return res.redirect('/');
     }
-    res.redirect('/signin');
+    res.redirect('/signup');
   } catch (error) {
     throw new Error(error);
   }
