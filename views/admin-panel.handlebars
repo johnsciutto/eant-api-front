@@ -1,5 +1,6 @@
 <nav class="navbar navbar-light col-sm-10 offset-sm-1">
   <a href="#" class="navbar-brand mr-auto">Movie Catalog</a>
+  <a href="/add" class="btn btn-success">Add Movie</a>
   <a href="/logout" class="btn btn-outline-danger ml-2">Log Out</a>
 </nav>
 <section class="row">
@@ -7,19 +8,26 @@
     <table class="table">
       <thead>
         <tr class="text-center">
+          <th width="5%">ID</th>
           <th width="20%">TITLE</th>
           <th width="20%">YEAR</th>
           <th width="10%">RATING</th>
           <th width="20%">GENRE</th>
+          <th width="35%">ACTIONS</th>
         </tr>
       </thead>
       <tbody>
         {{#each movies}}
         <tr class="text-center">
+          <td>{{this._id}}</td>
           <td>{{this.title}}</td>
           <td>{{this.year}}</td>
           <td>{{this.rating}}</td>
           <td>{{this.genre}}</td>
+          <td>
+            <a href="/change/{{this._id}}" class="btn btn-primary">UPDATE</a>
+            <a href="/delete/{{this._id}}" class="btn btn-danger">DELETE</a>
+          </td>
         </tr>
         {{/each}}
       </tbody>

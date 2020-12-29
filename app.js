@@ -1,6 +1,7 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
 const axios = require('axios').default;
+const jwt = require('jsonwebtoken');
 
 const { BACK_URL } = process.env;
 
@@ -24,8 +25,10 @@ app.route('/')
     const { cookie } = req.headers;
 
     let auth = '';
+    let decodedToken = '';
     if (cookie && cookie.slice(0, 5) === '_auth') {
       auth = cookie.slice(6);
+      decodedToken = await jwt.verify(auth, process.env.JWT_SECRET);
     }
 
     try {
@@ -38,6 +41,9 @@ app.route('/')
             Cookie: cookie,
           },
         });
+        if (decodedToken.admin) {
+          return res.render('admin-panel', { heading, movies });
+        }
         return res.render('panel', { heading, movies });
       }
       res.render('login');
