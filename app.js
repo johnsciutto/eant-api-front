@@ -57,7 +57,7 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/signup', (req, res) => {
-  res.render('signin');
+  res.render('signup');
 });
 
 app.post('/signup', async (req, res) => {
@@ -155,8 +155,6 @@ app.route('/delete/:id')
     });
   })
   .post(async (req, res) => {
-    // TODO: check if the user is authenticated
-
     await axios({
       method: 'delete',
       url: `${BACK_URL}/movies/${req.params.id}`,
