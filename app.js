@@ -22,16 +22,23 @@ app.get('/favicon.ico', (req, res) => {
 
 app.route('/')
   .get(async (req, res) => {
-    const { cookie } = req.headers;
-
-    let auth = '';
-    let decodedToken = '';
-    if (cookie && cookie.slice(0, 5) === '_auth') {
-      auth = cookie.slice(6);
-      decodedToken = await jwt.verify(auth, process.env.JWT_SECRET);
-    }
-
     try {
+      if (!req.headers.cookie) {
+        return res.render('login');
+      }
+      const { cookie } = req.headers;
+
+      let auth = '';
+      let decodedToken = '';
+      if (cookie && cookie.slice(0, 5) === '_auth') {
+        auth = cookie.slice(6);
+        if (auth === false || auth === 'false') {
+          res.clearCookie('_auth');
+          return res.render('login');
+        }
+        decodedToken = await jwt.verify(auth, process.env.JWT_SECRET);
+      }
+
       if (cookie && auth) {
         const heading = 'Movie Catalog';
         const { data: movies } = await axios({
@@ -82,22 +89,30 @@ app.post('/signup', async (req, res) => {
 
 app.post('/authenticate', async (req, res) => {
   // Do  a call to the backend, either get a cookie or not.
+
   const { data } = await axios({
     method: 'post',
     url: `${BACK_URL}/auth/login`,
     data: req.body,
   });
-  if (data) {
-    res.setHeader('Set-Cookie', [`_auth=${data}; maxage=${1000 * 60 * 60 * 24 * 365}`]);
+
+  if (data.ok) {
+    const { token } = data;
+
+    res.setHeader('Set-Cookie', [`_auth=${token}; expires=${new Date(2022, 1, 1).toUTCString()}`]);
     return res.redirect('/');
   }
-  return res.render('login');
+
+  return res.render('login', { message: data.message });
 });
 
 app.get('/contact', (req, res) => { res.render('contacto'); });
 
 app.route('/add')
   .get((req, res) => {
+    if (!req.headers.cookie) {
+      return res.render('login');
+    }
     res.render('formulario', { action: 'Add', method: 'POST' });
   })
   .post(async (req, res) => {
@@ -114,6 +129,9 @@ app.route('/add')
 
 app.route('/change/:id')
   .get(async (req, res) => {
+    if (!req.headers.cookie) {
+      return res.render('login');
+    }
     const { id } = req.params;
     const { data } = await axios.get(`${BACK_URL}/movies/${id}`, {
       headers: {
@@ -140,6 +158,9 @@ app.route('/change/:id')
 
 app.route('/delete/:id')
   .get(async (req, res) => {
+    if (!req.headers.cookie) {
+      return res.render('login');
+    }
     const { id } = req.params;
     const { data } = await axios.get(`${BACK_URL}/movies/${id}`, {
       headers: {
