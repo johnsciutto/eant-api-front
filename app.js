@@ -74,7 +74,7 @@ app.post('/signup', async (req, res) => {
       });
       return res.redirect('/');
     }
-    res.redirect('/signup');
+    res.render('signup', { message: data.message });
   } catch (error) {
     throw new Error(error);
   }
@@ -88,7 +88,7 @@ app.post('/authenticate', async (req, res) => {
     data: req.body,
   });
   if (data) {
-    res.setHeader('Set-Cookie', [`_auth=${data}; expires=${new Date(2022, 0, 1).toUTCString()}`]);
+    res.setHeader('Set-Cookie', [`_auth=${data}; maxage=${1000 * 60 * 60 * 24 * 365}`]);
     return res.redirect('/');
   }
   return res.render('login');
